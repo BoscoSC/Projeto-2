@@ -1,8 +1,16 @@
 const container = document.getElementById('container-exemplo');
 
+/**
+ * Limpa o container e adiciona um título para o exemplo.
+ * @param {string} titulo - O título a ser exibido.
+ */
 function prepararContainer(titulo) {
   container.innerHTML = `<h2>${titulo}</h2>`;
 }
+
+// ===================================================================
+// EXEMPLO 1: CALCULADORA DE MÉDIA
+// ===================================================================
 
 function mostrarCalculoMedia() {
   prepararContainer('Calculadora de Média');
@@ -21,9 +29,9 @@ function gerarCamposDeNota() {
   const num = document.getElementById('numNotas').value;
   const camposContainer = document.getElementById('camposContainer');
   const resultadoDiv = document.getElementById('resultadoMedia');
-  
-  resultadoDiv.innerHTML = ''; 
-  
+
+  resultadoDiv.innerHTML = ''; // Limpa resultado anterior
+
   if (num > 0) {
     let camposHTML = '<h3>Digite as notas:</h3>';
     for (let i = 0; i < num; i++) {
@@ -58,30 +66,84 @@ function calcularMediaFinal() {
   }
 }
 
+
+// ===================================================================
+// EXEMPLO 2: FORMULÁRIO COM DOWNLOAD
+// ===================================================================
+
 function mostrarFormulario() {
-  prepararContainer('Formulário Simples');
+  prepararContainer('Formulário com Download de .txt');
 
   const html = `
-    <form onsubmit="event.preventDefault(); alert('Formulário enviado! (simulação)');">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" required>
+    <form onsubmit="baixarFormularioTxt(event)">
+      <label for="formNome">Nome:</label>
+      <input type="text" id="formNome" placeholder="Seu nome completo" required>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" required>
+      <label for="formEmail">Email:</label>
+      <input type="email" id="formEmail" placeholder="seu@email.com" required>
+      
+      <label for="formIdade">Idade:</label>
+      <input type="number" id="formIdade" placeholder="Sua idade">
 
-      <label for="arquivo">Arquivo:</label>
-      <input type="file" id="arquivo">
+      <label for="formTrabalho">Trabalho:</label>
+      <input type="text" id="formTrabalho" placeholder="Sua profissão">
 
-      <button type="submit">Enviar</button>
+      <label for="formLazer">Lazer:</label>
+      <input type="text" id="formLazer" placeholder="Um hobby ou atividade de lazer">
+
+      <button type="submit">Baixar Informações em .txt</button>
     </form>
   `;
   container.innerHTML += html;
 }
 
-let frutas = []; 
+/**
+ * Pega os dados do formulário e inicia o download de um arquivo .txt
+ * @param {Event} event - O evento de submit do formulário.
+ */
+function baixarFormularioTxt(event) {
+  event.preventDefault(); // Impede o recarregamento da página
+
+  // 1. Coletar os dados dos campos do formulário
+  const nome = document.getElementById('formNome').value;
+  const email = document.getElementById('formEmail').value;
+  const idade = document.getElementById('formIdade').value;
+  const trabalho = document.getElementById('formTrabalho').value;
+  const lazer = document.getElementById('formLazer').value;
+
+  // 2. Formatar o conteúdo do arquivo de texto
+  const conteudoDoTxt = `
+Dados do Formulário
+===================
+Nome: ${nome}
+Email: ${email}
+Idade: ${idade}
+Trabalho: ${trabalho}
+Lazer: ${lazer}
+  `;
+
+  // 3. Criar o arquivo "virtual" (Blob)
+  const blob = new Blob([conteudoDoTxt], { type: 'text/plain;charset=utf-8' });
+
+  // 4. Criar um link de download temporário e clicar nele
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'dados_formulario.txt'; // Nome do arquivo a ser baixado
+
+  document.body.appendChild(link); // Adiciona o link ao corpo do documento
+  link.click(); // Simula o clique no link para iniciar o download
+  document.body.removeChild(link); // Remove o link temporário
+}
+
+
+// ===================================================================
+// EXEMPLO 3: LISTA DE FRUTAS
+// ===================================================================
+
+let frutas = []; // Array de frutas para o exemplo 3
 
 function mostrarListaFrutas() {
-  frutas = ['maçã', 'banana', 'laranja']; 
+  frutas = ['maçã', 'banana', 'laranja']; // Reinicia o array
   prepararContainer('Manipulando Frutas com Arrays');
 
   const html = `
@@ -105,9 +167,10 @@ function mostrarListaFrutas() {
     <pre id="saida"></pre>
   `;
   container.innerHTML += html;
-  atualizarListaFrutas();
+  atualizarListaFrutas(); // Exibe a lista inicial
 }
 
+// Funções específicas da Lista de Frutas
 function atualizarListaFrutas() {
   document.getElementById('listaFrutas').textContent = JSON.stringify(frutas);
 }
