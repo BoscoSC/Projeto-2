@@ -60,7 +60,7 @@ function calcularMediaFinal() {
 
 function mostrarFormulario() {
   prepararContainer('Formulário Simples');
-  
+
   const html = `
     <form onsubmit="event.preventDefault(); alert('Formulário enviado! (simulação)');">
       <label for="nome">Nome:</label>
@@ -68,6 +68,9 @@ function mostrarFormulario() {
 
       <label for="email">Email:</label>
       <input type="email" id="email" required>
+
+      <label for="arquivo">Arquivo:</label>
+      <input type="file" id="arquivo">
 
       <button type="submit">Enviar</button>
     </form>
