@@ -1,16 +1,8 @@
 const container = document.getElementById('container-exemplo');
 
-/**
- * Limpa o container e adiciona um título para o exemplo.
- * @param {string} titulo - O título a ser exibido.
- */
 function prepararContainer(titulo) {
   container.innerHTML = `<h2>${titulo}</h2>`;
 }
-
-// ===================================================================
-// EXEMPLO 1: CALCULADORA DE MÉDIA
-// ===================================================================
 
 function mostrarCalculoMedia() {
   prepararContainer('Calculadora de Média');
@@ -30,7 +22,7 @@ function gerarCamposDeNota() {
   const camposContainer = document.getElementById('camposContainer');
   const resultadoDiv = document.getElementById('resultadoMedia');
 
-  resultadoDiv.innerHTML = ''; // Limpa resultado anterior
+  resultadoDiv.innerHTML = '';
 
   if (num > 0) {
     let camposHTML = '<h3>Digite as notas:</h3>';
@@ -66,11 +58,6 @@ function calcularMediaFinal() {
   }
 }
 
-
-// ===================================================================
-// EXEMPLO 2: FORMULÁRIO COM DOWNLOAD
-// ===================================================================
-
 function mostrarFormulario() {
   prepararContainer('Formulário com Download de .txt');
 
@@ -97,21 +84,15 @@ function mostrarFormulario() {
   container.innerHTML += html;
 }
 
-/**
- * Pega os dados do formulário e inicia o download de um arquivo .txt
- * @param {Event} event - O evento de submit do formulário.
- */
 function baixarFormularioTxt(event) {
-  event.preventDefault(); // Impede o recarregamento da página
+  event.preventDefault();
 
-  // 1. Coletar os dados dos campos do formulário
   const nome = document.getElementById('formNome').value;
   const email = document.getElementById('formEmail').value;
   const idade = document.getElementById('formIdade').value;
   const trabalho = document.getElementById('formTrabalho').value;
   const lazer = document.getElementById('formLazer').value;
 
-  // 2. Formatar o conteúdo do arquivo de texto
   const conteudoDoTxt = `
 Dados do Formulário
 ===================
@@ -122,28 +103,21 @@ Trabalho: ${trabalho}
 Lazer: ${lazer}
   `;
 
-  // 3. Criar o arquivo "virtual" (Blob)
   const blob = new Blob([conteudoDoTxt], { type: 'text/plain;charset=utf-8' });
 
-  // 4. Criar um link de download temporário e clicar nele
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = 'dados_formulario.txt'; // Nome do arquivo a ser baixado
+  link.download = 'dados_formulario.txt';
 
-  document.body.appendChild(link); // Adiciona o link ao corpo do documento
-  link.click(); // Simula o clique no link para iniciar o download
-  document.body.removeChild(link); // Remove o link temporário
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-
-// ===================================================================
-// EXEMPLO 3: LISTA DE FRUTAS
-// ===================================================================
-
-let frutas = []; // Array de frutas para o exemplo 3
+let frutas = [];
 
 function mostrarListaFrutas() {
-  frutas = ['maçã', 'banana', 'laranja']; // Reinicia o array
+  frutas = ['maçã', 'banana', 'laranja'];
   prepararContainer('Manipulando Frutas com Arrays');
 
   const html = `
@@ -167,10 +141,9 @@ function mostrarListaFrutas() {
     <pre id="saida"></pre>
   `;
   container.innerHTML += html;
-  atualizarListaFrutas(); // Exibe a lista inicial
+  atualizarListaFrutas();
 }
 
-// Funções específicas da Lista de Frutas
 function atualizarListaFrutas() {
   document.getElementById('listaFrutas').textContent = JSON.stringify(frutas);
 }
